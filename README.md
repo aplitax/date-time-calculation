@@ -9,3 +9,8 @@
   - last month of quarter
   - days in quarter
   - days passed in quarter
+  - first day of week
+  - last day of week
+  - first day of week by year and week number
+  - last day of week by year and week number
+

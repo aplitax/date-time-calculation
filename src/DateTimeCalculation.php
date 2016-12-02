@@ -114,5 +114,61 @@ class DateTimeCalculation
 		echo "Days passed in quarter : " . $this->daysPassedInQuarter() . "\n";
 		echo "</pre>";
 	}
+
+	/**
+	 * Calculates first date of week from year and week number
+	 * @return \DateTime
+	 */
+	public function firstDayOfWeek() {
+		$date = clone $this->date;
+		return $date->modify("monday this week");
+	}
+
+	/**
+	 * Calculates last date of week from year and week number
+	 * @return \DateTime
+	 */
+	public function lastDayOfWeek() {
+		$date = clone $this->date;
+		return $date->modify("sunday this week");
+	}
 	
+	
+	/**
+	 * Calculates first date of week from year and week number
+	 * @param type $year
+	 * @param type $weekNr
+	 * @return \DateTime
+	 */
+	static function firstDayOfWeekNum($year = NULL, $weekNr = NULL) {
+		if (!$year) {
+			$year = date("Y");
+		}
+		if (!$weekNr) {
+			$weekNr = date("W");
+		}
+		
+		$date = new \DateTime();
+		$date->setISODate($year, $weekNr);
+		return $date;
+	}
+
+	/**
+	 * Calculates first date of week from year and week number
+	 * @param type $year
+	 * @param type $weekNr
+	 * @return \DateTime
+	 */
+	static function lastDayOfWeekNum($year = NULL, $weekNr = NULL) {
+		if (!$year) {
+			$year = date("Y");
+		}
+		if (!$weekNr) {
+			$weekNr = date("W");
+		}
+		
+		$date = new \DateTime();
+		$date->setISODate($year, $weekNr, 7);
+		return $date;
+	}
 }
