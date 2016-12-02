@@ -1,0 +1,17 @@
+{
+	"name": "aplitax/date-time-calculation",
+	"type": "library",
+	"description": "smart date time calculation missing in PHP",
+	"keywords": ["aplitax", "date", "time", "calculation"],
+	"license": ["MIT"],
+	"authors": [
+		{
+			"name": "Karel Uhlik",
+			"email": "karel.uhlik@atlas.cz",
+			"homepage": "http://uhlik.cz"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0"
+	}
+}
