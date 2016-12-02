@@ -2,6 +2,12 @@
 
 namespace ApliTax;
 
+/**
+ * DateTimeCalculation
+ *
+ * @author Karel Uhlík, ApliTax s.r.o.
+ * @license MIT
+ */
 class DateTimeCalculation 
 {
 	/** @var \Datetime */
