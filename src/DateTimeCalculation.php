@@ -101,7 +101,6 @@ class DateTimeCalculation
 	}
 	
 	public function info() {
-		setlocale(LC_ALL, "");
 		echo "<pre>";
 		echo "Date                   : " . $this->date->format("d.m.Y H:i:s") . "\n";
 		echo "Qarter                 : " . $this->quarter() . ".\n";
