@@ -1,5 +1,6 @@
 # DateTimeCalculation
  smart date time calculation missing in PHP
+ 
  From provided date you can get information of:
   - quarter
   - first day of quarter
