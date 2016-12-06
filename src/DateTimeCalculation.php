@@ -16,6 +16,7 @@ class DateTimeCalculation
 	public function __construct(\DateTime $date = NULL) {
 		if (!$date) {
 			$date = new \DateTime();
+			$date->setTime(0, 0, 0);
 		}
 		$this->date = $date;
 	}
@@ -28,7 +29,7 @@ class DateTimeCalculation
 	*/
 	public function firstDayOfQuarter() {
 		$m = $this->firstMonthOfQuarter();
-		return new \DateTime($this->date->format("Y") . "-" . $m . "-01");
+		return new \DateTime($this->date->format("Y") . "-" . $m . "-01 00:00:00");
 	}
 
 	/**
@@ -150,6 +151,7 @@ class DateTimeCalculation
 		
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr);
+		$date->setTime(0, 0, 0);
 		return $date;
 	}
 
@@ -169,6 +171,7 @@ class DateTimeCalculation
 		
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr, 7);
+		$date->setTime(0, 0, 0);
 		return $date;
 	}
 }
