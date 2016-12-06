@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"ApliTax": "src/"
+			"ApliTax\\DateTimeCalculation": "src/"
 		}
 	}	
 }
