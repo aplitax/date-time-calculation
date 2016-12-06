@@ -174,4 +174,48 @@ class DateTimeCalculation
 		$date->setTime(0, 0, 0);
 		return $date;
 	}
+
+	/**
+	 * Calculates next week and year from year and week number
+	 * @param type $year
+	 * @param type $weekNr
+	 * @return array [week, year]
+	 */
+	static function nextWeek($year = NULL, $weekNr = NULL) {
+		if (!$year) {
+			$year = date("Y");
+		}
+		if (!$weekNr) {
+			$weekNr = date("W");
+		}
+		
+		$date = new \DateTime();
+		$date->setISODate($year, $weekNr, 1);
+		$date->setTime(0, 0, 0);
+		$date->modify("+1 week");
+		
+		return ["week" => $date->format("W"), "year" => $date->format("Y")];
+	}
+
+	/**
+	 * Calculates previous week and year from year and week number
+	 * @param type $year
+	 * @param type $weekNr
+	 * @return array [week, year]
+	 */
+	static function previousWeek($year = NULL, $weekNr = NULL) {
+		if (!$year) {
+			$year = date("Y");
+		}
+		if (!$weekNr) {
+			$weekNr = date("W");
+		}
+		
+		$date = new \DateTime();
+		$date->setISODate($year, $weekNr, 1);
+		$date->setTime(0, 0, 0);
+		$date->modify("-1 week");
+		
+		return ["week" => $date->format("W"), "year" => $date->format("Y")];
+	}
 }
