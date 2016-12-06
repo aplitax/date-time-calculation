@@ -1,6 +1,6 @@
 <?php
 
-namespace ApliTax;
+namespace ApliTax\DateTimeCalculation;
 
 /**
  * DateTimeCalculation
