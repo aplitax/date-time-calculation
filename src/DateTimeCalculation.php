@@ -8,11 +8,11 @@ namespace ApliTax\DateTimeCalculation;
  * @author Karel Uhlík, ApliTax s.r.o.
  * @license MIT
  */
-class DateTimeCalculation 
-{
+class DateTimeCalculation {
+
 	/** @var \Datetime */
 	private $date;
-	
+
 	public function __construct(\DateTime $date = NULL) {
 		if (!$date) {
 			$date = new \DateTime();
@@ -22,66 +22,66 @@ class DateTimeCalculation
 	}
 
 	/**
-	* Calculates first day of quarter
-	* 
-	* @param DateTime $date
-	* @return DateTime
-	*/
+	 * Calculates first day of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return DateTime
+	 */
 	public function firstDayOfQuarter() {
 		$m = $this->firstMonthOfQuarter();
 		return new \DateTime($this->date->format("Y") . "-" . $m . "-01 00:00:00");
 	}
 
 	/**
-	* Calculates last day of quarter
-	* 
-	* @param DateTime $date
-	* @return DateTime
-	*/
+	 * Calculates last day of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return DateTime
+	 */
 	public function lastDayOfQuarter() {
 		$m = $this->lastMonthOfQuarter();
 		$return = new \DateTime($this->date->format("Y") . "-" . $m . "-01 23:59:59");
 		return $return->modify('last day of');
 	}
-	
+
 	/**
-	* Calculates first month of quarter
-	* 
-	* @param DateTime $date
-	* @return int
-	*/
+	 * Calculates first month of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return int
+	 */
 	public function firstMonthOfQuarter() {
 		$q = $this->quarter($this->date);
 		return 1 + ($q - 1) * 3;
 	}
 
 	/**
-	* Calculates last month of quarter
-	* 
-	* @param DateTime $date
-	* @return int
-	*/
+	 * Calculates last month of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return int
+	 */
 	public function lastMonthOfQuarter() {
 		$q = $this->quarter($this->date);
 		return $q * 3;
 	}
-	
+
 	/**
-	* Calculates quarter from date
-	* 
-	* @param DateTime $date
-	* @return int
-	*/
+	 * Calculates quarter from date
+	 * 
+	 * @param DateTime $date
+	 * @return int
+	 */
 	public function quarter() {
 		return floor(($this->date->format("n") - 1) / 3) + 1;
 	}
-	
+
 	/**
-	* Calculates total days in quarter
-	* 
-	* @param DateTime $date
-	* @return int
-	*/
+	 * Calculates total days in quarter
+	 * 
+	 * @param DateTime $date
+	 * @return int
+	 */
 	public function daysInQuarter() {
 		$d1 = $this->firstDayOfQuarter();
 		$d2 = $this->lastDayOfQuarter();
@@ -90,17 +90,17 @@ class DateTimeCalculation
 	}
 
 	/**
-	* Calculates days passed in quarter
-	* 
-	* @param DateTime $date
-	* @return int
-	*/
+	 * Calculates days passed in quarter
+	 * 
+	 * @param DateTime $date
+	 * @return int
+	 */
 	public function daysPassedInQuarter() {
 		$d1 = $this->firstDayOfQuarter();
 		$period = $d1->diff($this->date);
 		return $period->format("%a");
 	}
-	
+
 	public function info() {
 		echo "<pre>";
 		echo "Date                   : " . $this->date->format("d.m.Y H:i:s") . "\n";
@@ -133,8 +133,7 @@ class DateTimeCalculation
 		$date = clone $this->date;
 		return $date->modify("sunday this week");
 	}
-	
-	
+
 	/**
 	 * Calculates first date of week from year and week number
 	 * @param type $year
@@ -148,7 +147,7 @@ class DateTimeCalculation
 		if (!$weekNr) {
 			$weekNr = date("W");
 		}
-		
+
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr);
 		$date->setTime(0, 0, 0);
@@ -168,7 +167,7 @@ class DateTimeCalculation
 		if (!$weekNr) {
 			$weekNr = date("W");
 		}
-		
+
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr, 7);
 		$date->setTime(0, 0, 0);
@@ -188,12 +187,12 @@ class DateTimeCalculation
 		if (!$weekNr) {
 			$weekNr = date("W");
 		}
-		
+
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr, 1);
 		$date->setTime(0, 0, 0);
 		$date->modify("+1 week");
-		
+
 		return ["week" => $date->format("W"), "year" => $date->format("Y")];
 	}
 
@@ -210,12 +209,28 @@ class DateTimeCalculation
 		if (!$weekNr) {
 			$weekNr = date("W");
 		}
-		
+
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr, 1);
 		$date->setTime(0, 0, 0);
 		$date->modify("-1 week");
-		
+
 		return ["week" => $date->format("W"), "year" => $date->format("Y")];
 	}
+
+	/**
+	 * Calculates number of weeks in year
+	 * @param type $year
+	 * @return type
+	 */
+	static function weeksInYear($year = NULL) {
+		if (!$year) {
+			$year = date("Y");
+		}
+
+		$date = new \DateTime;
+		$date->setISODate($year, 53);
+		return ($date->format("W") === "53" ? 53 : 52);
+	}
+
 }
