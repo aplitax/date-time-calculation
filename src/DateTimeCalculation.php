@@ -48,7 +48,7 @@ class DateTimeCalculation {
 	 * Calculates first month of quarter
 	 * 
 	 * @param DateTime $date
-	 * @return int
+	 * @return integer
 	 */
 	public function firstMonthOfQuarter() {
 		$q = $this->quarter($this->date);
@@ -59,7 +59,7 @@ class DateTimeCalculation {
 	 * Calculates last month of quarter
 	 * 
 	 * @param DateTime $date
-	 * @return int
+	 * @return integer
 	 */
 	public function lastMonthOfQuarter() {
 		$q = $this->quarter($this->date);
@@ -70,7 +70,7 @@ class DateTimeCalculation {
 	 * Calculates quarter from date
 	 * 
 	 * @param DateTime $date
-	 * @return int
+	 * @return integer
 	 */
 	public function quarter() {
 		return floor(($this->date->format("n") - 1) / 3) + 1;
@@ -80,7 +80,7 @@ class DateTimeCalculation {
 	 * Calculates total days in quarter
 	 * 
 	 * @param DateTime $date
-	 * @return int
+	 * @return integer
 	 */
 	public function daysInQuarter() {
 		$d1 = $this->firstDayOfQuarter();
@@ -93,7 +93,7 @@ class DateTimeCalculation {
 	 * Calculates days passed in quarter
 	 * 
 	 * @param DateTime $date
-	 * @return int
+	 * @return integer
 	 */
 	public function daysPassedInQuarter() {
 		$d1 = $this->firstDayOfQuarter();
@@ -136,8 +136,8 @@ class DateTimeCalculation {
 
 	/**
 	 * Calculates first date of week from year and week number
-	 * @param type $year
-	 * @param type $weekNr
+	 * @param integer $year
+	 * @param integer $weekNr
 	 * @return \DateTime
 	 */
 	static function firstDayOfWeekNum($year = NULL, $weekNr = NULL) {
@@ -156,8 +156,8 @@ class DateTimeCalculation {
 
 	/**
 	 * Calculates first date of week from year and week number
-	 * @param type $year
-	 * @param type $weekNr
+	 * @param integer $year
+	 * @param integer $weekNr
 	 * @return \DateTime
 	 */
 	static function lastDayOfWeekNum($year = NULL, $weekNr = NULL) {
@@ -176,8 +176,8 @@ class DateTimeCalculation {
 
 	/**
 	 * Calculates next week and year from year and week number
-	 * @param type $year
-	 * @param type $weekNr
+	 * @param integer $year
+	 * @param integer $weekNr
 	 * @return array [week, year]
 	 */
 	static function nextWeek($year = NULL, $weekNr = NULL) {
@@ -198,8 +198,8 @@ class DateTimeCalculation {
 
 	/**
 	 * Calculates previous week and year from year and week number
-	 * @param type $year
-	 * @param type $weekNr
+	 * @param integer $year
+	 * @param integer $weekNr
 	 * @return array [week, year]
 	 */
 	static function previousWeek($year = NULL, $weekNr = NULL) {
@@ -220,8 +220,8 @@ class DateTimeCalculation {
 
 	/**
 	 * Calculates number of weeks in year
-	 * @param type $year
-	 * @return type
+	 * @param integer $year
+	 * @return integer
 	 */
 	static function weeksInYear($year = NULL) {
 		if (!$year) {
@@ -232,5 +232,52 @@ class DateTimeCalculation {
 		$date->setISODate($year, 53);
 		return ($date->format("W") === "53" ? 53 : 52);
 	}
-
+	
+	/**
+	 * Calculate number of total seconds in DateInterval
+	 * @param \DateInterval $interval
+	 * @return integer
+	 */
+	static function intervalToSeconds(\DateInterval $interval) {
+        $seconds = (string) $interval->s;
+        if ($interval->i) {
+            $seconds = bcadd($seconds, bcmul($interval->i, 60));
+        }
+        if ($interval->h) {
+            $seconds = bcadd($seconds, bcmul($interval->h, 60 * 60));
+        }
+        if ($interval->d) {
+            $seconds = bcadd($seconds, bcmul($interval->d, 60 * 60 * 24));
+        }
+        if ($interval->m) {
+            $seconds = bcadd($seconds, bcmul($interval->m, 2629740));
+        }
+        if ($interval->y) {
+            $seconds = bcadd($seconds, bcmul($interval->y, 31556874));
+        }
+        return $seconds;		
+	}
+	
+	/**
+	 * Calculate number of total minutes in DateInterval
+	 * @param \DateInterval $interval
+	 * @return integer
+	 */
+	static function intervalToMinutes(\DateInterval $interval) {
+        $minutes = (string) $interval->i;
+        if ($interval->h) {
+            $minutes = bcadd($minutes, bcmul($interval->h, 60));
+        }
+        if ($interval->d) {
+            $minutes = bcadd($minutes, bcmul($interval->d, 60 * 24));
+        }
+        if ($interval->m) {
+            $minutes = bcadd($minutes, bcmul($interval->m, 2629740 / 60));
+        }
+        if ($interval->y) {
+            $minutes = bcadd($minutes, bcmul($interval->y, 31556874 / 60));
+        }
+        return $minutes;		
+	}
+	
 }
