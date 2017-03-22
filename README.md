@@ -13,4 +13,9 @@
   - last day of week
   - first day of week by year and week number
   - last day of week by year and week number
+  - next week by year and week number
+  - previous week by year and week number
+  - weeks in year
+  - interval to seconds
+  - interval to minutes
 
