@@ -131,7 +131,7 @@ class DateTimeCalculation {
 	 */
 	public function lastDayOfWeek() {
 		$date = clone $this->date;
-		return $date->modify("sunday this week");
+		return $date->modify("sunday this week 23:59:59");
 	}
 
 	/**
@@ -170,7 +170,7 @@ class DateTimeCalculation {
 
 		$date = new \DateTime();
 		$date->setISODate($year, $weekNr, 7);
-		$date->setTime(0, 0, 0);
+		$date->setTime(23, 59, 59);
 		return $date;
 	}
 
