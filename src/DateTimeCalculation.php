@@ -1,6 +1,6 @@
 <?php
 
-namespace ApliTax;
+namespace ApliTax\DateTime;
 
 /**
  * DateTimeCalculation
@@ -8,7 +8,7 @@ namespace ApliTax;
  * @author Karel Uhlík, ApliTax s.r.o.
  * @license MIT
  */
-class DateTimeCalculation {
+class Calculation {
 
 	/** @var \Datetime */
 	private $date;
