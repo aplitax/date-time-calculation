@@ -10,126 +10,126 @@ namespace ApliTax;
  */
 class DateTimeCalculation {
 
-    /** @var \Datetime */
-    private $date;
-    
-    /** @var boolean */
-    private $returnImmutable = FALSE;
+	/** @var \Datetime */
+	private $date;
+	
+	/** @var boolean */
+	private $returnImmutable = FALSE;
 
-    /**
-     * 
-     * @param \DateTime | \DateTimeImmutable $date
-     * @throws \Exception
-     */
-    public function __construct($date = NULL, $returnImmutable = FALSE) {
+	/**
+	 * 
+	 * @param \DateTime | \DateTimeImmutable $date
+	 * @throws \Exception
+	 */
+	public function __construct($date = NULL, $returnImmutable = FALSE) {
 	$this->returnImmutable = $returnImmutable;
 	
 	if (!$date) {
-	    $date = new \DateTime();
-	    $date->setTime(0, 0, 0);
+		$date = new \DateTime();
+		$date->setTime(0, 0, 0);
 	} else {
-	    if ($date instanceof \DateTime or $date instanceof \DateTimeImmutable) {
+		if ($date instanceof \DateTime or $date instanceof \DateTimeImmutable) {
 		$this->date = $date;
-	    } else {
+		} else {
 		throw new \Exception("Parameter must be instance of \DateTime or \DateTimeImmutable");
-	    }
+		}
 	}
-    }
+	}
 
-    /**
-     * Calculates first day of quarter
-     * 
-     * @param DateTime $date
-     * @return DateTime
-     */
-    public function firstDayOfQuarter() {
+	/**
+	 * Calculates first day of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return DateTime
+	 */
+	public function firstDayOfQuarter() {
 	$m = $this->firstMonthOfQuarter();
 	$str = $this->date->format("Y") . "-" . $m . "-01 00:00:00";
 
 	if ($this->returnImmutable) {
-	    $date = new \DateTimeImmutable($str);
+		$date = new \DateTimeImmutable($str);
 	} else {
-	    $date = new \DateTime($str);
+		$date = new \DateTime($str);
 	}
 	
 	return $date;
-    }
+	}
 
-    /**
-     * Calculates last day of quarter
-     * 
-     * @param DateTime $date
-     * @return DateTime
-     */
-    public function lastDayOfQuarter() {
+	/**
+	 * Calculates last day of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return DateTime
+	 */
+	public function lastDayOfQuarter() {
 	$m = $this->lastMonthOfQuarter();
 	$str = $this->date->format("Y") . "-" . $m . "-01 23:59:59";
 	if ($this->returnImmutable) {
-	    $date = new \DateTimeImmutable($str);
+		$date = new \DateTimeImmutable($str);
 	} else {
-	    $date = new \DateTime($str);
+		$date = new \DateTime($str);
 	}
 	return $date->modify('last day of');
-    }
+	}
 
-    /**
-     * Calculates first month of quarter
-     * 
-     * @param DateTime $date
-     * @return integer
-     */
-    public function firstMonthOfQuarter() {
+	/**
+	 * Calculates first month of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return integer
+	 */
+	public function firstMonthOfQuarter() {
 	$q = $this->quarter($this->date);
 	return 1 + ($q - 1) * 3;
-    }
+	}
 
-    /**
-     * Calculates last month of quarter
-     * 
-     * @param DateTime $date
-     * @return integer
-     */
-    public function lastMonthOfQuarter() {
+	/**
+	 * Calculates last month of quarter
+	 * 
+	 * @param DateTime $date
+	 * @return integer
+	 */
+	public function lastMonthOfQuarter() {
 	$q = $this->quarter($this->date);
 	return $q * 3;
-    }
+	}
 
-    /**
-     * Calculates quarter from date
-     * 
-     * @param DateTime $date
-     * @return integer
-     */
-    public function quarter() {
+	/**
+	 * Calculates quarter from date
+	 * 
+	 * @param DateTime $date
+	 * @return integer
+	 */
+	public function quarter() {
 	return floor(($this->date->format("n") - 1) / 3) + 1;
-    }
+	}
 
-    /**
-     * Calculates total days in quarter
-     * 
-     * @param DateTime $date
-     * @return integer
-     */
-    public function daysInQuarter() {
+	/**
+	 * Calculates total days in quarter
+	 * 
+	 * @param DateTime $date
+	 * @return integer
+	 */
+	public function daysInQuarter() {
 	$d1 = $this->firstDayOfQuarter();
 	$d2 = $this->lastDayOfQuarter();
 	$period = $d1->diff($d2);
 	return $period->format("%a") + 1;
-    }
+	}
 
-    /**
-     * Calculates days passed in quarter
-     * 
-     * @param DateTime $date
-     * @return integer
-     */
-    public function daysPassedInQuarter() {
+	/**
+	 * Calculates days passed in quarter
+	 * 
+	 * @param DateTime $date
+	 * @return integer
+	 */
+	public function daysPassedInQuarter() {
 	$d1 = $this->firstDayOfQuarter();
 	$period = $d1->diff($this->date);
 	return $period->format("%a");
-    }
+	}
 
-    public function info() {
+	public function info() {
 	echo "<pre>";
 	echo "Date                   : " . $this->date->format("d.m.Y H:i:s") . "\n";
 	echo "Quarter                 : " . $this->quarter() . ".\n";
@@ -142,89 +142,89 @@ class DateTimeCalculation {
 	echo "Days in quarter        : " . $this->daysInQuarter() . "\n";
 	echo "Days passed in quarter : " . $this->daysPassedInQuarter() . "\n";
 	echo "</pre>";
-    }
+	}
 
-    /**
-     * Calculates first date of week from year and week number
-     * @return \DateTime
-     */
-    public function firstDayOfWeek() {
+	/**
+	 * Calculates first date of week from year and week number
+	 * @return \DateTime
+	 */
+	public function firstDayOfWeek() {
 	$date = clone $this->date;
 	return $date->modify("monday this week");
-    }
+	}
 
-    /**
-     * Calculates last date of week from year and week number
-     * @return \DateTime
-     */
-    public function lastDayOfWeek() {
+	/**
+	 * Calculates last date of week from year and week number
+	 * @return \DateTime
+	 */
+	public function lastDayOfWeek() {
 	$date = clone $this->date;
 	return $date->modify("sunday this week 23:59:59");
-    }
+	}
 
-    /**
-     * Calculates first date of week from year and week number
-     * @param integer $year
-     * @param integer $weekNr
-     * @return \DateTime
-     */
-    static function firstDayOfWeekNum($year = NULL, $weekNr = NULL, $returnImmutable = FALSE) {
+	/**
+	 * Calculates first date of week from year and week number
+	 * @param integer $year
+	 * @param integer $weekNr
+	 * @return \DateTime
+	 */
+	static function firstDayOfWeekNum($year = NULL, $weekNr = NULL, $returnImmutable = FALSE) {
 	
 	if (!$year) {
-	    $year = date("Y");
+		$year = date("Y");
 	}
 	if (!$weekNr) {
-	    $weekNr = date("W");
+		$weekNr = date("W");
 	}
 
 	if ($returnImmutable) {
-	    $date = new \DateTimeImmutable();
+		$date = new \DateTimeImmutable();
 	} else {
-	    $date = new \DateTime();
+		$date = new \DateTime();
 	}
 	
 	$date->setISODate($year, $weekNr);
 	$date->setTime(0, 0, 0);
 	return $date;
-    }
+	}
 
-    /**
-     * Calculates first date of week from year and week number
-     * @param integer $year
-     * @param integer $weekNr
-     * @return \DateTime
-     */
-    static function lastDayOfWeekNum($year = NULL, $weekNr = NULL, $returnImmutable = FALSE) {
+	/**
+	 * Calculates first date of week from year and week number
+	 * @param integer $year
+	 * @param integer $weekNr
+	 * @return \DateTime
+	 */
+	static function lastDayOfWeekNum($year = NULL, $weekNr = NULL, $returnImmutable = FALSE) {
 	if (!$year) {
-	    $year = date("Y");
+		$year = date("Y");
 	}
 	if (!$weekNr) {
-	    $weekNr = date("W");
+		$weekNr = date("W");
 	}
 
 	if ($returnImmutable) {
-	    $date = new \DateTimeImmutable();
+		$date = new \DateTimeImmutable();
 	} else {
-	    $date = new \DateTime();
+		$date = new \DateTime();
 	}
 	
 	$date->setISODate($year, $weekNr, 7);
 	$date->setTime(23, 59, 59);
 	return $date;
-    }
+	}
 
-    /**
-     * Calculates next week and year from year and week number
-     * @param integer $year
-     * @param integer $weekNr
-     * @return array [week, year]
-     */
-    static function nextWeek($year = NULL, $weekNr = NULL) {
+	/**
+	 * Calculates next week and year from year and week number
+	 * @param integer $year
+	 * @param integer $weekNr
+	 * @return array [week, year]
+	 */
+	static function nextWeek($year = NULL, $weekNr = NULL) {
 	if (!$year) {
-	    $year = date("Y");
+		$year = date("Y");
 	}
 	if (!$weekNr) {
-	    $weekNr = date("W");
+		$weekNr = date("W");
 	}
 
 	$date = new \DateTime();
@@ -233,20 +233,20 @@ class DateTimeCalculation {
 	$date->modify("+1 week");
 
 	return ["week" => $date->format("W"), "year" => $date->format("Y")];
-    }
+	}
 
-    /**
-     * Calculates previous week and year from year and week number
-     * @param integer $year
-     * @param integer $weekNr
-     * @return array [week, year]
-     */
-    static function previousWeek($year = NULL, $weekNr = NULL) {
+	/**
+	 * Calculates previous week and year from year and week number
+	 * @param integer $year
+	 * @param integer $weekNr
+	 * @return array [week, year]
+	 */
+	static function previousWeek($year = NULL, $weekNr = NULL) {
 	if (!$year) {
-	    $year = date("Y");
+		$year = date("Y");
 	}
 	if (!$weekNr) {
-	    $weekNr = date("W");
+		$weekNr = date("W");
 	}
 
 	$date = new \DateTime();
@@ -255,68 +255,68 @@ class DateTimeCalculation {
 	$date->modify("-1 week");
 
 	return ["week" => $date->format("W"), "year" => $date->format("Y")];
-    }
+	}
 
-    /**
-     * Calculates number of weeks in year
-     * @param integer $year
-     * @return integer
-     */
-    static function weeksInYear($year = NULL) {
+	/**
+	 * Calculates number of weeks in year
+	 * @param integer $year
+	 * @return integer
+	 */
+	static function weeksInYear($year = NULL) {
 	if (!$year) {
-	    $year = date("Y");
+		$year = date("Y");
 	}
 
 	$date = new \DateTime;
 	$date->setISODate($year, 53);
 	return ($date->format("W") === "53" ? 53 : 52);
-    }
+	}
 
-    /**
-     * Calculate number of total seconds in DateInterval
-     * @param \DateInterval $interval
-     * @return integer
-     */
-    static function intervalToSeconds(\DateInterval $interval) {
+	/**
+	 * Calculate number of total seconds in DateInterval
+	 * @param \DateInterval $interval
+	 * @return integer
+	 */
+	static function intervalToSeconds(\DateInterval $interval) {
 	$seconds = (string) $interval->s;
 	if ($interval->i) {
-	    $seconds = bcadd($seconds, bcmul($interval->i, 60));
+		$seconds = bcadd($seconds, bcmul($interval->i, 60));
 	}
 	if ($interval->h) {
-	    $seconds = bcadd($seconds, bcmul($interval->h, 60 * 60));
+		$seconds = bcadd($seconds, bcmul($interval->h, 60 * 60));
 	}
 	if ($interval->d) {
-	    $seconds = bcadd($seconds, bcmul($interval->d, 60 * 60 * 24));
+		$seconds = bcadd($seconds, bcmul($interval->d, 60 * 60 * 24));
 	}
 	if ($interval->m) {
-	    $seconds = bcadd($seconds, bcmul($interval->m, 2629740));
+		$seconds = bcadd($seconds, bcmul($interval->m, 2629740));
 	}
 	if ($interval->y) {
-	    $seconds = bcadd($seconds, bcmul($interval->y, 31556874));
+		$seconds = bcadd($seconds, bcmul($interval->y, 31556874));
 	}
 	return $seconds;
-    }
+	}
 
-    /**
-     * Calculate number of total minutes in DateInterval
-     * @param \DateInterval $interval
-     * @return integer
-     */
-    static function intervalToMinutes(\DateInterval $interval) {
+	/**
+	 * Calculate number of total minutes in DateInterval
+	 * @param \DateInterval $interval
+	 * @return integer
+	 */
+	static function intervalToMinutes(\DateInterval $interval) {
 	$minutes = (string) $interval->i;
 	if ($interval->h) {
-	    $minutes = bcadd($minutes, bcmul($interval->h, 60));
+		$minutes = bcadd($minutes, bcmul($interval->h, 60));
 	}
 	if ($interval->d) {
-	    $minutes = bcadd($minutes, bcmul($interval->d, 60 * 24));
+		$minutes = bcadd($minutes, bcmul($interval->d, 60 * 24));
 	}
 	if ($interval->m) {
-	    $minutes = bcadd($minutes, bcmul($interval->m, 2629740 / 60));
+		$minutes = bcadd($minutes, bcmul($interval->m, 2629740 / 60));
 	}
 	if ($interval->y) {
-	    $minutes = bcadd($minutes, bcmul($interval->y, 31556874 / 60));
+		$minutes = bcadd($minutes, bcmul($interval->y, 31556874 / 60));
 	}
 	return $minutes;
-    }
+	}
 
 }
