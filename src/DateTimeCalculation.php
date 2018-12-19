@@ -232,7 +232,7 @@ class DateTimeCalculation {
 	$date->setTime(0, 0, 0);
 	$date->modify("+1 week");
 
-	return ["week" => $date->format("W"), "year" => $date->format("Y")];
+	return ["week" => $date->format("W"), "year" => $date->format("o")];
     }
 
     /**
@@ -254,7 +254,7 @@ class DateTimeCalculation {
 	$date->setTime(0, 0, 0);
 	$date->modify("-1 week");
 
-	return ["week" => $date->format("W"), "year" => $date->format("Y")];
+	return ["week" => $date->format("W"), "year" => $date->format("o")];
     }
 
     /**
