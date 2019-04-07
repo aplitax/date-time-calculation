@@ -126,7 +126,7 @@ class DateTimeCalculation {
     public function daysPassedInQuarter() {
 	$d1 = $this->firstDayOfQuarter();
 	$period = $d1->diff($this->date);
-	return $period->format("%a");
+	return $period->format("%a") + 1;
     }
 
     public function info() {
