@@ -319,4 +319,29 @@ class DateTimeCalculation {
 	return $minutes;
     }
 
+    /**
+     * Calculate number of hours in DateInterval and converts into decimal
+     * @param \DateInterval $interval
+     * @return float
+     */
+    static function intervalToHourDecimal(\DateInterval $interval) {
+	$hours = (float) $interval->h;
+	if ($interval->s) {
+        $hours = bcadd($hours, bcdiv($interval->i, 60 * 60, 4), 4);
+	}
+	if ($interval->i) {
+        $hours = bcadd($hours, bcdiv($interval->i, 60, 4), 4);
+	}
+	if ($interval->d) {
+        $hours = bcadd($hours, bcmul($interval->d, 24), 4);
+	}
+	if ($interval->m) {
+        $hours = bcadd($hours, bcmul($interval->m, 2629740 / 60), 4);
+	}
+	if ($interval->y) {
+        $hours = bcadd($hours, bcmul($interval->y, 31556874 / 60), 4);
+	}
+	return $hours;
+    }
+
 }
